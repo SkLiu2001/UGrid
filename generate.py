@@ -12,7 +12,7 @@ parser.add_argument('--dataset_root', type=str)
 parser.add_argument('--shape', type=str, choices=['curve', 'square'])
 parser.add_argument('--image_size', type=int)
 parser.add_argument('--start_index', type=int)
-parser.add_argument('--num_instances', type=int)
+parser.add_argument('--num_instances', type=int,help='number of instances to generate')
 
 
 def generate_punched_random_curve_region(opt: argparse.Namespace) -> None:
