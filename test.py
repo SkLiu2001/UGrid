@@ -130,7 +130,7 @@ def main() -> None:
 
     # training parameters
     experiment_checkpoint_path: str = os.path.join(arg_opt.checkpoint_root, arg_opt.load_experiment)
-    exp_opt_np: np.ndarray = np.load(os.path.join(experiment_checkpoint_path, 'opt.npy'), allow_pickle=True)
+    exp_opt_np: np.ndarray = np.load(os.path.join(experiment_checkpoint_path, 'opt.npy'), allow_pickle=True) # TODO: change to opt.npy
 
     # merged argument namespace
     opt: argparse.Namespace = util.merge_namespace(exp_opt_np.item(), arg_opt)
