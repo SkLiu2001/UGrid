@@ -1,0 +1,16 @@
+export PATH=/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+cd comparasion/cpmg/build
+
+
+sudo apt-get update
+sudo apt-get install libtbb-dev
+sudo apt-get install libopenmpi-dev openmpi-bin
+export PATH=/usr/local/cuda-12.2/bin:$PATH
+sudo apt-get install libboost-all-dev
+/home/qinnan/liusk/cmake-3.28.3/bin/cmake .. 
+make -j
+
+cmake .. -DCMAKE_CUDA_ARCHITECTURES="70;80"
+
+git submodule update --init --recursive

@@ -13,12 +13,15 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 
 find_package(Boost REQUIRED)
 
-set(Python_ROOT_DIR "$ENV{HOME}/opt/anaconda3/envs/py3/")
+set(Python_ROOT_DIR "/home/qinnan/miniconda3/envs/liusk_base")
 find_package(Python COMPONENTS Interpreter Development)
 find_package(pybind11 REQUIRED CONFIG HINTS "${Python_ROOT_DIR}/lib/python3.10/site-packages/pybind11/share/cmake/")
 
+find_package(MPI REQUIRED)
+set(PYMODULE cpmg)
+
 set(CAFFE2_USE_CUDNN ON)
-find_package(Torch REQUIRED CONFIG HINTS "$ENV{HOME}/opt/anaconda3/envs/py3/lib/python3.10/site-packages/torch/share/cmake/")
+find_package(Torch REQUIRED CONFIG HINTS "/home/qinnan/miniconda3/envs/liusk_base/lib/python3.10/site-packages/torch/share/cmake/")
 
 # AMGCL build conflicts with libfmt, go header-only instead
 set(AMGCL_INCLUDE_DIRS "$ENV{HOME}/lib/amgcl/")
@@ -69,8 +72,6 @@ set(ALL_LIBRARIES
         torch
 )
 
-set(PYMODULE cpmg)
-
 set(ALL_COMPILE_DEFS
         -DMODULE_NAME=${PYMODULE}
 )
@@ -80,6 +81,7 @@ set(ALL_COMPILE_OPTS
 )
 
 pybind11_add_module(${PYMODULE} ${ALL_SOURCE_FILES})
+target_link_libraries(${PYMODULE} PUBLIC MPI::MPI_CXX)
 target_compile_definitions(${PYMODULE} PUBLIC ${ALL_COMPILE_DEFS})
 target_compile_options(${PYMODULE} PUBLIC ${ALL_COMPILE_OPTS})
 target_include_directories(${PYMODULE} PUBLIC ${ALL_INCLUDE_DIRS})
